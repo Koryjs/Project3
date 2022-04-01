@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
 		if (leng[a] == "\n") {
 			if (strstr(laser, search) != NULL) {
 				printf("%c", laser);
-				memset(laser, 0, sizeof(char));
 			}
+			memset(laser, 0, sizeof(char));
 		} else {
 			strcat(laser, (char) leng[a]);
 		}
