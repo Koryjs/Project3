@@ -55,13 +55,14 @@ int main(int argc, char *argv[]) {
 	char *search = argv[2];
 	laser = (char*) malloc(sb.st_size);
 	for (int a = 0; a < strlen(leng); a++) {
-		if (leng[a] == "\n") {
+		if ((char) leng[a] == '\n') {
 			if (strstr(laser, search) != NULL) {
-				printf("%c", laser);
+				printf("%s\n", laser);
 			}
-			memset(laser, 0, sizeof(char));
+			memset(laser, 0, sizeof(char *));
 		} else {
-			strcat(laser, (char) leng[a]);
+			const char* fill = (char *) leng[a];
+			strcat(laser, fill);
 		}
 	}
 	return 0;
