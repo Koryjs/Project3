@@ -3,7 +3,8 @@
 #include <unistd.h>
 #include <sys/shm.h>
 #include <string.h>
-
+#include <sys/stat.h>
+//void readFile1()
 int main(int argc, char *argv[]) {
 	if (argc != 3) {
 		printf("Function not called properly.");
@@ -20,6 +21,39 @@ int main(int argc, char *argv[]) {
 	}
 	puts(str);
 	shmdt(str);
-	//shmctl(shmid, IPC_RMID, NULL);
+	bool cycle = true;
+	int counter = 0;
+	while (cycle) {
+		if (counter == 5) {
+			cycle = false;
+		}
+		counter = counter+1;
+		sleep(2);
+	}
+	shmctl(shmid, IPC_RMID, NULL);
+	FILE *in_file = fopen(boo, "r");
+	if (!in_file) {
+		perror("fopen");
+		exit(1);
+	}
+	struct stat sb;
+	if (stat(boo, &sb) == -1) {
+	perror("stat");
+	exit(1);
+	}
+	char *leng;
+	leng = (char*) malloc(sb.st_size);
+	char *file_contents = (char*) malloc(sb.st_size);
+	while (fgets(file_contents, sb.st_size, in_file)) {
+		strcat(leng, file_contents);
+	}
+	fclose(in_file);
+	for (int a = 0; a < strlen(leng); a++) {
+		printf("%c", (char) leng[a:]);
+	}
+	/*bool same = true;
+	while (true) 
+		if (strcmp(str, boo)!= 0)
+			same = false;*/
 	return 0;
 }
